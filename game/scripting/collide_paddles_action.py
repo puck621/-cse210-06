@@ -1,5 +1,6 @@
 from constants import *
 from game.scripting.action import Action
+from game.service.border_service import Border_Service
 
 
 class CollidePaddleAction(Action):
