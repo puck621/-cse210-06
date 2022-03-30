@@ -1,11 +1,11 @@
 from game.casting.actor import Actor
 
 
-class Brick(Actor):
+class asteroid(Actor):
     """A solid, rectangular object that can be broken."""
 
     def __init__(self, body, animation, points, debug = False):
-        """Constructs a new Brick.
+        """Constructs a new asteroid.
         
         Args:
             body: A new instance of Body.
@@ -18,7 +18,7 @@ class Brick(Actor):
         self._points = points
         
     def get_animation(self):
-        """Gets the brick's image.
+        """Gets the asteroid's image.
         
         Returns:
             An instance of Image.
@@ -26,7 +26,7 @@ class Brick(Actor):
         return self._animation
 
     def get_body(self):
-        """Gets the brick's body.
+        """Gets the asteroid's body.
         
         Returns:
             An instance of Body.
@@ -34,9 +34,9 @@ class Brick(Actor):
         return self._body
 
     def get_points(self):
-        """Gets the brick's points.
+        """Gets the asteroid's points.
         
         Returns:
-            A number representing the brick's points.
+            A number representing the asteroid's points.
         """
         return self._points

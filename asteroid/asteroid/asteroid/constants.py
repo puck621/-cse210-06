@@ -89,34 +89,33 @@ LEVEL_FORMAT = "LEVEL: {}"
 LIVES_FORMAT = "LIVES: {}"
 SCORE_FORMAT = "SCORE: {}"
 
-# BALL
-BALL_GROUP = "balls"
-BALL_IMAGE = "batter/assets/images\\000.png"
-BALL_WIDTH = 28
-BALL_HEIGHT = 28
-BALL_VELOCITY = 6
+# BULLET
+BULLET_GROUP = "bullets"
+BULLET_IMAGE = "batter/assets/images\\000.png"
+BULLET_WIDTH = 28
+BULLET_HEIGHT = 28
+BULLET_VELOCITY = 6
 
-# RACKET
-RACKET_GROUP = "rackets"
-RACKET_IMAGES = [f"batter/assets/images\\{n:03}.png" for n in range(100, 103)]
-RACKET_WIDTH = 106
-RACKET_HEIGHT = 28
-RACKET_RATE = 6
-RACKET_VELOCITY = 7
+# SHIP
+SHIP_GROUP = "ships"
+SHIP_IMAGES = "batter/assets/images\\001.png"
+SHIP_WIDTH = 106
+SHIP_HEIGHT = 28
+SHIP_RATE = 6
+SHIP_VELOCITY = 7
 
-# BRICK
-BRICK_GROUP = "bricks"
-BRICK_IMAGES = {
-    "b": [f"batter/assets/images\\{i:03}.png" for i in range(10,19)],
-    "g": [f"batter/assets/images\\{i:03}.png" for i in range(20,29)],
-    "p": [f"batter/assets/images\\{i:03}.png" for i in range(30,39)],
-    "y": [f"batter/assets/images\\{i:03}.png" for i in range(40,49)]
+# ASTEROIDS
+ASTEROIDS_GROUP = "asteroids"
+ASTEROIDS_IMAGES = {
+    "l": [f"batter/assets/images\\{i:03}.png" for i in range(2,13)],
+    "m": [f"batter/assets/images\\{i:03}.png" for i in range(14,28)],
+    "s": [f"batter/assets/images\\{i:03}.png" for i in range(29,40)]
 }
-BRICK_WIDTH = 80
-BRICK_HEIGHT = 28
-BRICK_DELAY = 0.5
-BRICK_RATE = 4
-BRICK_POINTS = 50
+ASTEROIDS_WIDTH = 80
+ASTEROIDS_HEIGHT = 28
+ASTEROIDS_DELAY = 0.5
+ASTEROIDS_RATE = 4
+ASTEROIDS_POINTS = 50
 
 # DIALOG
 DIALOG_GROUP = "dialogs"

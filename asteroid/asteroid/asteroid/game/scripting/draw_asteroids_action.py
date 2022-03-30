@@ -2,22 +2,22 @@ from constants import *
 from game.scripting.action import Action
 
 
-class DrawBricksAction(Action):
+class DrawasteroidsAction(Action):
 
     def __init__(self, video_service):
         self._video_service = video_service
         
     def execute(self, cast, script, callback):
-        bricks = cast.get_actors(BRICK_GROUP)
+        asteroids = cast.get_actors(ASTEROIDS_GROUP)
         
-        for brick in bricks:
-            body = brick.get_body()
+        for asteroid in asteroids:
+            body = asteroid.get_body()
 
-            if brick.is_debug():
+            if asteroid.is_debug():
                 rectangle = body.get_rectangle()
                 self._video_service.draw_rectangle(rectangle, PURPLE)
                 
-            animation = brick.get_animation()
+            animation = asteroid.get_animation()
             image = animation.next_image()
             position = body.get_position()
             self._video_service.draw_image(image, position)

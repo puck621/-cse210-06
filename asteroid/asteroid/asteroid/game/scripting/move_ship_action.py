@@ -3,14 +3,14 @@ from game.casting.point import Point
 from game.scripting.action import Action
 
 
-class MoveRacketAction(Action):
+class MoveshipAction(Action):
 
     def __init__(self):
         pass
 
     def execute(self, cast, script, callback):
-        racket = cast.get_first_actor(RACKET_GROUP)
-        body = racket.get_body()
+        ship = cast.get_first_actor(SHIP_GROUP)
+        body = ship.get_body()
         velocity = body.get_velocity()
         position = body.get_position()
         x = position.get_x()
@@ -19,8 +19,8 @@ class MoveRacketAction(Action):
 
         if x < 0:
             position = Point(0, position.get_y())
-        elif x > (SCREEN_WIDTH - RACKET_WIDTH):
-            position = Point(SCREEN_WIDTH - RACKET_WIDTH, position.get_y())
+        elif x > (SCREEN_WIDTH - SHIP_WIDTH):
+            position = Point(SCREEN_WIDTH - SHIP_WIDTH, position.get_y())
             
         body.set_position(position)
         

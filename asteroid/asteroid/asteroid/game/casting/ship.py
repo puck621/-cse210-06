@@ -3,8 +3,8 @@ from game.casting.actor import Actor
 from game.casting.point import Point
 
 
-class Racket(Actor):
-    """A implement used to hit and bounce the ball in the game."""
+class ship(Actor):
+    """A implement used to hit and bounce the Bullet in the game."""
     
     def __init__(self, body, animation, debug = False):
         """Constructs a new Bat.
@@ -41,16 +41,26 @@ class Racket(Actor):
         new_position = position.add(velocity)
         self._body.set_position(new_position)
 
-    def swing_left(self):
+    def move_left(self):
         """Steers the bat to the left."""
-        velocity = Point(-RACKET_VELOCITY, 0)
+        velocity = Point(-SHIP_VELOCITY, 0)
         self._body.set_velocity(velocity)
         
-    def swing_right(self):
+    def move_right(self):
         """Steers the bat to the right."""
-        velocity = Point(RACKET_VELOCITY, 0)
+        velocity = Point(SHIP_VELOCITY, 0)
         self._body.set_velocity(velocity)
     
+    def move_up(self):
+        """Steers the bat to the left."""
+        velocity = Point(0, SHIP_VELOCITY)
+        self._body.set_velocity(velocity)
+        
+    def move_down(self):
+        """Steers the bat to the right."""
+        velocity = Point(0, -SHIP_VELOCITY)
+        self._body.set_velocity(velocity)
+
     def stop_moving(self):
         """Stops the bat from moving."""
         velocity = Point(0, 0)
