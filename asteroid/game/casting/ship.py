@@ -1,12 +1,12 @@
 from constants import *
 from game.casting.actor import Actor
 from game.casting.point import Point
+from game.casting.animation import Animation
 
-
-class ship(Actor):
+class Ship(Actor):
     """A implement used to hit and bounce the Bullet in the game."""
     
-    def __init__(self, body, animation, debug = False):
+    def __init__(self, body, animation: Animation, debug = False):
         """Constructs a new Bat.
         
         Args:Args:

@@ -36,6 +36,9 @@ class Bullet(Actor):
         """
         return self._image
         
+    def release(self):
+        pass
+
     def release_up(self):
         """Release the Bullet in up."""
         velocity = Point(0, BULLET_VELOCITY)
