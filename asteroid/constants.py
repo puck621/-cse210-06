@@ -2,9 +2,13 @@ from game.casting.color import Color
 # -------------------------------------------------------------------------------------------------- 
 # GENERAL GAME CONSTANTS
 # -------------------------------------------------------------------------------------------------- 
+import os
+import sys
+
+ROOT = os.path.dirname(sys.modules['__main__'].__file__)
 
 # GAME
-GAME_NAME = "Asteroid"
+GAME_NAME = "Batter"
 FRAME_RATE = 60
 
 # SCREEN
@@ -20,14 +24,14 @@ FIELD_LEFT = 0
 FIELD_RIGHT = SCREEN_WIDTH
 
 # FONT
-FONT_FILE = "asteroid/assets/fonts\\zorque.otf"
+FONT_FILE = ROOT + "/assets/fonts\\zorque.otf"
 FONT_SMALL = 32
 FONT_LARGE = 48
 
 # SOUND
-BOUNCE_SOUND = "asteroid/assets/sounds\\boing.wav"
-WELCOME_SOUND = "asteroid/assets/sounds\\start.wav"
-OVER_SOUND = "asteroid/assets/sounds\\over.wav"
+BOUNCE_SOUND = ROOT + "/assets/sounds\\boing.wav"
+WELCOME_SOUND = ROOT + "/assets/sounds\\start.wav"
+OVER_SOUND = ROOT + "/assets/sounds\\over.wav"
 
 # TEXT
 ALIGN_CENTER = 0
@@ -54,7 +58,7 @@ IN_PLAY = 3
 GAME_OVER = 4
 
 # LEVELS
-LEVEL_FILE = "asteroid/assets/data\\level-{:03}.txt"
+LEVEL_FILE = ROOT + "/assets/data\\level-{:03}.txt"
 BASE_LEVELS = 5
 
 # -------------------------------------------------------------------------------------------------- 
@@ -90,14 +94,14 @@ SCORE_FORMAT = "SCORE: {}"
 
 # BULLET
 BULLET_GROUP = "bullets"
-BULLET_IMAGE = "asteroid/assets/images\\000.png"
+BULLET_IMAGE = ROOT + "/assets/images\\000.png"
 BULLET_WIDTH = 28
 BULLET_HEIGHT = 28
 BULLET_VELOCITY = 6
 
 # SHIP
 SHIP_GROUP = "ships"
-SHIP_IMAGES =[  "asteroid/assets/images\\001.png" ]
+SHIP_IMAGES =[  ROOT + "/assets/images\\001.png" ]
 SHIP_WIDTH = 106
 SHIP_HEIGHT = 28
 SHIP_RATE = 6
@@ -106,9 +110,9 @@ SHIP_VELOCITY = 7
 # ASTEROIDS
 ASTEROIDS_GROUP = "asteroids"
 ASTEROIDS_IMAGES = {
-    "l": [f"asteroid/assets/images\\{i:03}.png" for i in range(2,13)],
-    "m": [f"asteroid/assets/images\\{i:03}.png" for i in range(14,28)],
-    "s": [f"asteroid/assets/images\\{i:03}.png" for i in range(29,40)]
+    "l": [f"{ROOT}/assets/images\\{i:03}.png" for i in range(2,13)],
+    "m": [f"{ROOT}/assets/images\\{i:03}.png" for i in range(14,28)],
+    "s": [f"{ROOT}/assets/images\\{i:03}.png" for i in range(29,40)]
 }
 ASTEROIDS_WIDTH = 80
 ASTEROIDS_HEIGHT = 28
@@ -121,3 +125,5 @@ DIALOG_GROUP = "dialogs"
 ENTER_TO_START = "PRESS ENTER TO START"
 PREP_TO_LAUNCH = "PREPARING TO LAUNCH"
 WAS_GOOD_GAME = "GAME OVER"
+
+

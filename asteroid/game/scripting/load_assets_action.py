@@ -1,5 +1,5 @@
 from game.scripting.action import Action
-
+from constants import *
 
 class LoadAssetsAction(Action):
 
@@ -8,7 +8,6 @@ class LoadAssetsAction(Action):
         self._video_service = video_service
 
     def execute(self, cast, script, callback):
-        self._audio_service.load_sounds("asteroid/assets/sounds")
-        self._video_service.load_fonts("asteroid/assets/fonts")
-        self._video_service.load_images("asteroid/assets/images")
-        
+        self._audio_service.load_sounds(ROOT + "/assets/sounds")
+        self._video_service.load_fonts(ROOT + "/assets/fonts")
+        self._video_service.load_images(ROOT + "/assets/images")
