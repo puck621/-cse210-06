@@ -4,6 +4,7 @@ import pyray
 from constants import *
 from game.casting.color import Color
 from game.casting.text import Text
+from game.casting.image import Image
 from game.services.video_service import VideoService 
 
 
@@ -23,8 +24,8 @@ class RaylibVideoService(VideoService):
         pyray.begin_drawing()
         pyray.clear_background(raylib_color)
 
-    def draw_image(self, image, position):
-        filepath = image.get_filename()
+    def draw_image(self, image: Image, position):
+        filepath = image._filename
         texture = self._textures[filepath]
         x = position.get_x()
         y = position.get_y()
