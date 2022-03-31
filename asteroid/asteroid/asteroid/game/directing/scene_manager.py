@@ -146,8 +146,8 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     
     def _activate_Bullet(self, cast):
-        Bullet = cast.get_first_actor(BULLET_GROUP)
-        Bullet.release()
+        bullet = cast.get_first_actor(BULLET_GROUP)
+        bullet.release()
 
     def _add_Bullet(self, cast):
         cast.clear_actors(BULLET_GROUP)
@@ -158,8 +158,8 @@ class SceneManager:
         velocity = Point(0, 0)
         body = Body(position, size, velocity)
         image = Image(BULLET_IMAGE)
-        Bullet = Bullet(body, image, True)
-        cast.add_actor(BULLET_GROUP, Bullet)
+        bullet = Bullet(body, image, True)
+        cast.add_actor(BULLET_GROUP, bullet)
 
     def _add_asteroids(self, cast):
         cast.clear_actors(ASTEROIDS_GROUP)

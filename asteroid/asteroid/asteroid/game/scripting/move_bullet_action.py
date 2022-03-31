@@ -8,8 +8,8 @@ class MoveBulletAction(Action):
         pass
         
     def execute(self, cast, script, callback):
-        Bullet = cast.get_first_actor(BULLET_GROUP)
-        body = Bullet.get_body()
+        bullet = cast.get_first_actor(BULLET_GROUP)
+        body = bullet.get_body()
         position = body.get_position()
         velocity = body.get_velocity()
         position = position.add(velocity)
