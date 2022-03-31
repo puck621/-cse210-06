@@ -4,7 +4,7 @@ from game.casting.color import Color
 # -------------------------------------------------------------------------------------------------- 
 
 # GAME
-GAME_NAME = "Batter"
+GAME_NAME = "Asteroid"
 FRAME_RATE = 60
 
 # SCREEN
