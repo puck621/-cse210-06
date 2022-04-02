@@ -68,6 +68,7 @@ class SceneManager:
         pass
 
     def prepare_scene(self, scene, cast, script):
+        """Prepares a new scene"""
         if scene == NEW_GAME:
             self._prepare_new_game(cast, script)
         elif scene == NEXT_LEVEL:
@@ -84,6 +85,7 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     
     def _prepare_new_game(self, cast, script):
+        """Prepares a new game"""
         self._add_stats(cast)
         self._add_level(cast)
         self._add_lives(cast)
@@ -102,6 +104,7 @@ class SceneManager:
         self._add_release_script(script)
         
     def _prepare_next_level(self, cast, script):
+        """Prepares the next level"""
         self._add_Bullet(cast)
         self._add_asteroids(cast)
         self._add_ship(cast)
@@ -113,6 +116,7 @@ class SceneManager:
         script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
         
     def _prepare_try_again(self, cast, script):
+        """Prepares the try again"""
         self._add_Bullet(cast)
         self._add_ship(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
@@ -132,6 +136,7 @@ class SceneManager:
         self._add_output_script(script)
 
     def _prepare_game_over(self, cast, script):
+        """Prepares the game over"""
         self._add_Bullet(cast)
         self._add_ship(cast)
         self._add_dialog(cast, WAS_GOOD_GAME)
@@ -146,10 +151,12 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     
     def _activate_Bullet(self, cast):
+        """Activates the bullet in the scene"""
         bullet = cast.get_first_actor(BULLET_GROUP)
         bullet.release()
 
     def _add_Bullet(self, cast):
+        """Adds the Bullet to the scene"""
         cast.clear_actors(BULLET_GROUP)
         x = CENTER_X - BULLET_WIDTH / 2
         y = SCREEN_HEIGHT - SHIP_HEIGHT - BULLET_HEIGHT  
@@ -162,6 +169,7 @@ class SceneManager:
         cast.add_actor(BULLET_GROUP, bullet)
 
     def _add_asteroids(self, cast):
+        """Adds the Asteroids to the scene"""
         cast.clear_actors(ASTEROIDS_GROUP)
 
         stats = cast.get_first_actor(STATS_GROUP)
@@ -195,6 +203,7 @@ class SceneManager:
                     cast.add_actor(ASTEROIDS_GROUP, asteroid)
 
     def _add_dialog(self, cast, message):
+        """Adds the dialoge to the scene"""
         cast.clear_actors(DIALOG_GROUP)
         text = Text(message, FONT_FILE, FONT_SMALL, ALIGN_CENTER)
         position = Point(CENTER_X, CENTER_Y)
@@ -202,6 +211,7 @@ class SceneManager:
         cast.add_actor(DIALOG_GROUP, label)
 
     def _add_level(self, cast):
+        """Adds the levels"""
         cast.clear_actors(LEVEL_GROUP)
         text = Text(LEVEL_FORMAT, FONT_FILE, FONT_SMALL, ALIGN_LEFT)
         position = Point(HUD_MARGIN, HUD_MARGIN)
@@ -209,6 +219,7 @@ class SceneManager:
         cast.add_actor(LEVEL_GROUP, label)
 
     def _add_lives(self, cast):
+        """Adds the lives to the scene"""
         cast.clear_actors(LIVES_GROUP)
         text = Text(LIVES_FORMAT, FONT_FILE, FONT_SMALL, ALIGN_RIGHT)
         position = Point(SCREEN_WIDTH - HUD_MARGIN, HUD_MARGIN)
@@ -216,6 +227,7 @@ class SceneManager:
         cast.add_actor(LIVES_GROUP, label)
 
     def _add_score(self, cast):
+        """Adds the score to the scene"""
         cast.clear_actors(SCORE_GROUP)
         text = Text(SCORE_FORMAT, FONT_FILE, FONT_SMALL, ALIGN_CENTER)
         position = Point(CENTER_X, HUD_MARGIN)
@@ -223,11 +235,13 @@ class SceneManager:
         cast.add_actor(SCORE_GROUP, label)
 
     def _add_stats(self, cast):
+        """Adds the stats"""
         cast.clear_actors(STATS_GROUP)
         stats = Stats()
         cast.add_actor(STATS_GROUP, stats)
 
     def _add_ship(self, cast):
+        """Adds the ship to the scene"""
         cast.clear_actors(SHIP_GROUP)
         x = CENTER_X - SHIP_WIDTH / 2
         y = SCREEN_HEIGHT - SHIP_HEIGHT
@@ -242,6 +256,9 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     # scripting methods
     # ----------------------------------------------------------------------------------------------
+    """
+    The responsibility of the Scripting methods is to keep track of a collection of actions of the cast. 
+    """
     def _add_initialize_script(self, script):
         script.clear_actions(INITIALIZE)
         script.add_action(INITIALIZE, self.INITIALIZE_DEVICES_ACTION)

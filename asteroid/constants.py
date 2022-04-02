@@ -5,10 +5,14 @@ from game.casting.color import Color
 import os
 import sys
 
+"""These values are constant throughout the game.  They control the size of the GUI, 
+the colors used, the speed of the frame rate , the ship size and speed, the bullets size and speed,
+and the asteroids size and speed."""
+
 ROOT = os.path.dirname(sys.modules['__main__'].__file__)
 
 # GAME
-GAME_NAME = "Batter"
+GAME_NAME = "Asteriods"
 FRAME_RATE = 60
 
 # SCREEN
