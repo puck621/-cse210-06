@@ -9,7 +9,7 @@ from game.casting.label import Label
 from game.casting.point import Point
 from game.casting.ship import Ship
 from game.casting.stats import Stats
-from game.casting.text import Text 
+from game.casting.text import Text
 from game.scripting.change_scene_action import ChangeSceneAction
 from game.scripting.check_over_action import CheckOverAction
 from game.scripting.collide_borders_action import CollideBordersAction
@@ -17,7 +17,7 @@ from game.scripting.collide_asteroid_action import CollideasteroidAction
 from game.scripting.collide_ship_action import CollideshipAction
 from game.scripting.control_ship_action import ControlshipAction
 from game.scripting.draw_bullet_action import DrawBulletAction
-from game.scripting.draw_asteroids_action import DrawasteroidsAction
+from game.scripting.draw_asteroids_action import DrawAsteroidsAction
 from game.scripting.draw_dialog_action import DrawDialogAction
 from game.scripting.draw_hud_action import DrawHudAction
 from game.scripting.draw_ship_action import DrawshipAction
@@ -25,7 +25,8 @@ from game.scripting.end_drawing_action import EndDrawingAction
 from game.scripting.initialize_devices_action import InitializeDevicesAction
 from game.scripting.load_assets_action import LoadAssetsAction
 from game.scripting.move_bullet_action import MoveBulletAction
-from game.scripting.move_ship_action import MoveshipAction
+from game.scripting.move_asteroid_action import MoveAsteroidAction
+from game.scripting.move_ship_action import MoveShipAction
 from game.scripting.play_sound_action import PlaySoundAction
 from game.scripting.release_devices_action import ReleaseDevicesAction
 from game.scripting.start_drawing_action import StartDrawingAction
@@ -35,11 +36,12 @@ from game.services.raylib.raylib_audio_service import RaylibAudioService
 from game.services.raylib.raylib_keyboard_service import RaylibKeyboardService
 from game.services.raylib.raylib_physics_service import RaylibPhysicsService
 from game.services.raylib.raylib_video_service import RaylibVideoService
+from random import uniform
 
 
 class SceneManager:
     """The person in charge of setting up the cast and script for each scene."""
-    
+
     AUDIO_SERVICE = RaylibAudioService()
     KEYBOARD_SERVICE = RaylibKeyboardService()
     PHYSICS_SERVICE = RaylibPhysicsService()
@@ -51,7 +53,7 @@ class SceneManager:
     COLLIDE_SHIP_ACTION = CollideshipAction(PHYSICS_SERVICE, AUDIO_SERVICE)
     CONTROL_SHIP_ACTION = ControlshipAction(KEYBOARD_SERVICE)
     DRAW_BULLET_ACTION = DrawBulletAction(VIDEO_SERVICE)
-    DRAW_ASTEROIDS_ACTION = DrawasteroidsAction(VIDEO_SERVICE)
+    DRAW_ASTEROIDS_ACTION = DrawAsteroidsAction(VIDEO_SERVICE)
     DRAW_DIALOG_ACTION = DrawDialogAction(VIDEO_SERVICE)
     DRAW_HUD_ACTION = DrawHudAction(VIDEO_SERVICE)
     DRAW_SHIP_ACTION= DrawshipAction(VIDEO_SERVICE)
@@ -59,7 +61,8 @@ class SceneManager:
     INITIALIZE_DEVICES_ACTION = InitializeDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     LOAD_ASSETS_ACTION = LoadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
     MOVE_BULLET_ACTION = MoveBulletAction()
-    MOVE_SHIP_ACTION = MoveshipAction()
+    MOVE_ASTEROID_ACTION = MoveAsteroidAction()
+    MOVE_SHIP_ACTION = MoveShipAction()
     RELEASE_DEVICES_ACTION = ReleaseDevicesAction(AUDIO_SERVICE, VIDEO_SERVICE)
     START_DRAWING_ACTION = StartDrawingAction(VIDEO_SERVICE)
     UNLOAD_ASSETS_ACTION = UnloadAssetsAction(AUDIO_SERVICE, VIDEO_SERVICE)
@@ -77,20 +80,20 @@ class SceneManager:
             self._prepare_try_again(cast, script)
         elif scene == IN_PLAY:
             self._prepare_in_play(cast, script)
-        elif scene == GAME_OVER:    
+        elif scene == GAME_OVER:
             self._prepare_game_over(cast, script)
-    
+
     # ----------------------------------------------------------------------------------------------
     # scene methods
     # ----------------------------------------------------------------------------------------------
-    
+
     def _prepare_new_game(self, cast, script):
         """Prepares a new game"""
+        self._asteroid_count = INITIAL_ROCK_COUNT
         self._add_stats(cast)
         self._add_level(cast)
         self._add_lives(cast)
         self._add_score(cast)
-        self._add_Bullet(cast)
         self._add_asteroids(cast)
         self._add_ship(cast)
         self._add_dialog(cast, ENTER_TO_START)
@@ -102,22 +105,21 @@ class SceneManager:
         self._add_output_script(script)
         self._add_unload_script(script)
         self._add_release_script(script)
-        
+
     def _prepare_next_level(self, cast, script):
         """Prepares the next level"""
-        self._add_Bullet(cast)
         self._add_asteroids(cast)
         self._add_ship(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
+        self._asteroid_count += ROCK_COUNT_INCREMENT
 
         script.clear_actions(INPUT)
         script.add_action(INPUT, TimedChangeSceneAction(IN_PLAY, 2))
         self._add_output_script(script)
         script.add_action(OUTPUT, PlaySoundAction(self.AUDIO_SERVICE, WELCOME_SOUND))
-        
+
     def _prepare_try_again(self, cast, script):
         """Prepares the try again"""
-        self._add_Bullet(cast)
         self._add_ship(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
 
@@ -127,7 +129,6 @@ class SceneManager:
         self._add_output_script(script)
 
     def _prepare_in_play(self, cast, script):
-        self._activate_Bullet(cast)
         cast.clear_actors(DIALOG_GROUP)
 
         script.clear_actions(INPUT)
@@ -137,7 +138,6 @@ class SceneManager:
 
     def _prepare_game_over(self, cast, script):
         """Prepares the game over"""
-        self._add_Bullet(cast)
         self._add_ship(cast)
         self._add_dialog(cast, WAS_GOOD_GAME)
 
@@ -149,7 +149,7 @@ class SceneManager:
     # ----------------------------------------------------------------------------------------------
     # casting methods
     # ----------------------------------------------------------------------------------------------
-    
+
     def _activate_Bullet(self, cast):
         """Activates the bullet in the scene"""
         bullet = cast.get_first_actor(BULLET_GROUP)
@@ -159,7 +159,7 @@ class SceneManager:
         """Adds the Bullet to the scene"""
         cast.clear_actors(BULLET_GROUP)
         x = CENTER_X - BULLET_WIDTH / 2
-        y = SCREEN_HEIGHT - SHIP_HEIGHT - BULLET_HEIGHT  
+        y = SCREEN_HEIGHT - SHIP_HEIGHT - BULLET_HEIGHT
         position = Point(x, y)
         size = Point(BULLET_WIDTH, BULLET_HEIGHT)
         velocity = Point(0, 0)
@@ -167,6 +167,20 @@ class SceneManager:
         image = Image(BULLET_IMAGE)
         bullet = Bullet(body, image, True)
         cast.add_actor(BULLET_GROUP, bullet)
+
+    def _asteroid_position(self):
+
+        x = CENTER_X
+        y = CENTER_Y
+
+        while (x > SCREEN_WIDTH / 5 and x < SCREEN_WIDTH * 4 / 5):
+            x = uniform(0, SCREEN_WIDTH)
+
+        while (y > SCREEN_HEIGHT / 5 and y < SCREEN_HEIGHT * 4 / 5):
+            y = uniform(0, SCREEN_HEIGHT)
+
+        point = Point(x, y)
+        return point
 
     def _add_asteroids(self, cast):
         """Adds the Asteroids to the scene"""
@@ -176,31 +190,22 @@ class SceneManager:
         level = stats.get_level() % BASE_LEVELS
         filename = LEVEL_FILE.format(level)
 
-        with open(filename, 'r') as file:
-            reader = csv.reader(file, skipinitialspace=True)
+        for i in range(self._asteroid_count):
 
-            for r, row in enumerate(reader):
-                for c, column in enumerate(row):
+            position = self._asteroid_position()
+            size = Point(ASTEROIDS_WIDTH, ASTEROIDS_HEIGHT)
 
-                    x = FIELD_LEFT + c * ASTEROIDS_WIDTH
-                    y = FIELD_TOP + r * ASTEROIDS_HEIGHT
-                    # color = column[0]
-                    frames = int(column[1])
-                    points = ASTEROIDS_POINTS 
+            # Give each asteroid a random x and y velocity
+            # between 1 and ASTEROID_RATE
+            velocity = Point(uniform(-ASTEROIDS_RATE, ASTEROIDS_RATE),
+              uniform(-ASTEROIDS_RATE, ASTEROIDS_RATE))
 
-                    if frames == 1:
-                        points *= 2
+            images = ASTEROIDS_IMAGES["l"][0:2]
+            body = Body(position, size, velocity)
+            animation = Animation(images, ASTEROIDS_RATE, ASTEROIDS_DELAY)
 
-                    position = Point(x, y)
-                    size = Point(ASTEROIDS_WIDTH, ASTEROIDS_HEIGHT)
-                    velocity = Point(0, 0)
-                    images = ASTEROIDS_IMAGES["l"][0:frames]
-
-                    body = Body(position, size, velocity)
-                    animation = Animation(images, ASTEROIDS_RATE, ASTEROIDS_DELAY)
-
-                    asteroid = Asteroid(body, animation, points)
-                    cast.add_actor(ASTEROIDS_GROUP, asteroid)
+            asteroid = Asteroid(body, animation, ASTEROIDS_POINTS)
+            cast.add_actor(ASTEROIDS_GROUP, asteroid)
 
     def _add_dialog(self, cast, message):
         """Adds the dialoge to the scene"""
@@ -244,7 +249,7 @@ class SceneManager:
         """Adds the ship to the scene"""
         cast.clear_actors(SHIP_GROUP)
         x = CENTER_X - SHIP_WIDTH / 2
-        y = SCREEN_HEIGHT - SHIP_HEIGHT
+        y = CENTER_Y - SHIP_HEIGHT / 2
         position = Point(x, y)
         size = Point(SHIP_WIDTH, SHIP_HEIGHT)
         velocity = Point(0, 0)
@@ -257,7 +262,7 @@ class SceneManager:
     # scripting methods
     # ----------------------------------------------------------------------------------------------
     """
-    The responsibility of the Scripting methods is to keep track of a collection of actions of the cast. 
+    The responsibility of the Scripting methods is to keep track of a collection of actions of the cast.
     """
     def _add_initialize_script(self, script):
         script.clear_actions(INITIALIZE)
@@ -266,7 +271,7 @@ class SceneManager:
     def _add_load_script(self, script):
         script.clear_actions(LOAD)
         script.add_action(LOAD, self.LOAD_ASSETS_ACTION)
-    
+
     def _add_output_script(self, script):
         script.clear_actions(OUTPUT)
         script.add_action(OUTPUT, self.START_DRAWING_ACTION)
@@ -280,17 +285,17 @@ class SceneManager:
     def _add_release_script(self, script):
         script.clear_actions(RELEASE)
         script.add_action(RELEASE, self.RELEASE_DEVICES_ACTION)
-    
+
     def _add_unload_script(self, script):
         script.clear_actions(UNLOAD)
         script.add_action(UNLOAD, self.UNLOAD_ASSETS_ACTION)
-        
+
     def _add_update_script(self, script):
         script.clear_actions(UPDATE)
         script.add_action(UPDATE, self.MOVE_BULLET_ACTION)
+        script.add_action(UPDATE, self.MOVE_ASTEROID_ACTION)
         script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
         script.add_action(UPDATE, self.COLLIDE_BORDERS_ACTION)
         script.add_action(UPDATE, self.COLLIDE_ASTEROIDS_ACTION)
         script.add_action(UPDATE, self.COLLIDE_SHIP_ACTION)
-        script.add_action(UPDATE, self.MOVE_SHIP_ACTION)
         script.add_action(UPDATE, self.CHECK_OVER_ACTION)

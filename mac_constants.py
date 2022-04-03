@@ -30,14 +30,14 @@ FIELD_LEFT = 0
 FIELD_RIGHT = SCREEN_WIDTH
 
 # FONT
-FONT_FILE = ROOT + "/assets/fonts\\zorque.otf"
+FONT_FILE = ROOT + "/assets/fonts/zorque.otf"
 FONT_SMALL = 32
 FONT_LARGE = 48
 
 # SOUND
-BOUNCE_SOUND = ROOT + "/assets/sounds\\boing.wav"
-WELCOME_SOUND = ROOT + "/assets/sounds\\start.wav"
-OVER_SOUND = ROOT + "/assets/sounds\\over.wav"
+BOUNCE_SOUND = ROOT + "/assets/sounds/boing.wav"
+WELCOME_SOUND = ROOT + "/assets/sounds/start.wav"
+OVER_SOUND = ROOT + "/assets/sounds/over.wav"
 
 # TEXT
 ALIGN_CENTER = 0
@@ -64,7 +64,7 @@ IN_PLAY = 3
 GAME_OVER = 4
 
 # LEVELS
-LEVEL_FILE = ROOT + "/assets/data\\level-{:03}.txt"
+LEVEL_FILE = ROOT + "/assets/data/level-{:03}.txt"
 BASE_LEVELS = 5
 
 # --------------------------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ SCORE_FORMAT = "SCORE: {}"
 
 # BULLET
 BULLET_GROUP = "bullets"
-BULLET_IMAGE = ROOT + "/assets/images\\000.png"
+BULLET_IMAGE = ROOT + "/assets/images/000.png"
 BULLET_WIDTH = 28
 BULLET_HEIGHT = 28
 BULLET_VELOCITY = 6
@@ -108,7 +108,7 @@ BULLET_LIFE = 60
 
 # SHIP
 SHIP_GROUP = "ships"
-SHIP_IMAGES =[  ROOT + "/assets/images\\001.png" ]
+SHIP_IMAGES =[  ROOT + "/assets/images/001.png" ]
 SHIP_WIDTH = 106
 SHIP_HEIGHT = 28
 SHIP_RATE = 6
@@ -122,14 +122,13 @@ ASTEROIDS_GROUP = "asteroids"
 INITIAL_ROCK_COUNT = 3
 ROCK_COUNT_INCREMENT = 1
 ASTEROIDS_IMAGES = {
-    "l": [f"{ROOT}/assets/images\\{i:03}.png" for i in range(2,40)],
+    "l": [f"{ROOT}/assets/images/{i:03}.png" for i in range(2,40)]
 }
 ASTEROIDS_DELAY = 0.5
 ASTEROIDS_RATE = 4
 ASTEROIDS_POINTS = 50
 ASTEROIDS_WIDTH =30
 ASTEROIDS_HEIGHT =30
-
 
 
 # DIALOG

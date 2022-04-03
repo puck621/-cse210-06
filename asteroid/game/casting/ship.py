@@ -5,14 +5,14 @@ from game.casting.animation import Animation
 
 class Ship(Actor):
     """A implement used to shoot the Bullet in the game."""
-    
+
     def __init__(self, body, animation: Animation, debug = False):
         """Constructs a new ship.
-        
+
         Args:Args:
             body: A new instance of Body.
             animation: A new instance of Animation.
-            debug: If it is being debugged. 
+            debug: If it is being debugged.
         """
         super().__init__(debug)
         self._body = body
@@ -20,7 +20,7 @@ class Ship(Actor):
 
     def get_animation(self):
         """Gets the ship's animation.
-        
+
         Returns:
             An instance of Animation.
         """
@@ -28,7 +28,7 @@ class Ship(Actor):
 
     def get_body(self):
         """Gets the ship's body.
-        
+
         Returns:
             An instance of Body.
         """
@@ -36,32 +36,51 @@ class Ship(Actor):
 
     def move_next(self):
         """Moves the ship using its velocity."""
+        print("move next")
+
         position = self._body.get_position()
         velocity = self._body.get_velocity()
+
+        print("Ship Position %s %s" % (position.get_x(), position.get_y()))
+        print("Ship Velocity %s %s" % (velocity.get_x(), velocity.get_y()))
+
         new_position = position.add(velocity)
+        print("New Ship Postion %s %s" % (position.get_x(), position.get_y()))
+
         self._body.set_position(new_position)
 
     def move_left(self):
         """Steers the ship to the left."""
-        velocity = Point(-SHIP_VELOCITY, 0)
-        self._body.set_velocity(velocity)
-        
+        print("Ship Move Left")
+        delta = Point(-SHIP_VELOCITY, 0)
+        self._body.update_velocity(delta)
+        self.move_next()
+
     def move_right(self):
         """Steers the ship to the right."""
-        velocity = Point(SHIP_VELOCITY, 0)
-        self._body.set_velocity(velocity)
-    
+        print("Ship Move Right")
+        delta = Point(SHIP_VELOCITY, 0)
+        self._body.update_velocity(delta)
+        self.move_next()
+
     def move_up(self):
         """Steers the ship to the left."""
-        velocity = Point(0, SHIP_VELOCITY)
-        self._body.set_velocity(velocity)
-        
+        print("Ship Move Up")
+        delta = Point(0, -SHIP_VELOCITY)
+        self._body.update_velocity(delta)
+        self.move_next()
+
     def move_down(self):
         """Steers the ship to the right."""
-        velocity = Point(0, -SHIP_VELOCITY)
-        self._body.set_velocity(velocity)
+        print("Ship Move Down")
+        delta = Point(0, +SHIP_VELOCITY)
+        self._body.update_velocity(delta)
+        self.move_next()
 
     def stop_moving(self):
-        """Stops the shup from moving."""
+        """Stops the ship from moving."""
+        print("Ship Stop")
         velocity = Point(0, 0)
-        self._body.set_velocity(velocity)
+        self._body.set_velocity(delta)
+        self.move_next()
+

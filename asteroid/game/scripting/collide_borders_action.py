@@ -7,34 +7,37 @@ class CollideBordersAction(Action):
 
     def __init__(self, physics_service, audio_service):
         self._physics_service = physics_service
-        self._audio_service = audio_service    
-        
+        self._audio_service = audio_service
+
     def execute(self, cast, script, callback):
-        bullet = cast.get_first_actor(BULLET_GROUP)
-        body = bullet.get_body()
-        position = body.get_position()
-        x = position.get_x()
-        y = position.get_y()
-        bounce_sound = Sound(BOUNCE_SOUND)
-        over_sound = Sound(OVER_SOUND)
-                
-        if x < FIELD_LEFT:
-            cast.remove_actor(BULLET_GROUP, bullet)
+        bullets = cast.get_actors(BULLET_GROUP)
 
-        elif x >= (FIELD_RIGHT - BULLET_WIDTH):
-            cast.remove_actor(BULLET_GROUP, bullet)
+        for bullet in bullets:
 
-        if y < FIELD_TOP:
-            cast.remove_actor(BULLET_GROUP, bullet)
+            body = bullet.get_body()
+            position = body.get_position()
+            x = position.get_x()
+            y = position.get_y()
+            bounce_sound = Sound(BOUNCE_SOUND)
+            over_sound = Sound(OVER_SOUND)
 
-        elif y >= (FIELD_BOTTOM - BULLET_WIDTH):
-            cast.remove_actor(BULLET_GROUP, bullet)
+            if x < FIELD_LEFT:
+                cast.remove_actor(BULLET_GROUP, bullet)
 
-            #stats = cast.get_first_actor(STATS_GROUP)
-            #stats.lose_life()
-            
-           # if stats.get_lives() > 0:
-            #    callback.on_next(TRY_AGAIN) 
-            #else:
-             #   callback.on_next(GAME_OVER)
-              #  self._audio_service.play_sound(over_sound)
+            elif x >= (FIELD_RIGHT - BULLET_WIDTH):
+                cast.remove_actor(BULLET_GROUP, bullet)
+
+            if y < FIELD_TOP:
+                cast.remove_actor(BULLET_GROUP, bullet)
+
+            elif y >= (FIELD_BOTTOM - BULLET_WIDTH):
+                cast.remove_actor(BULLET_GROUP, bullet)
+
+                #stats = cast.get_first_actor(STATS_GROUP)
+                #stats.lose_life()
+
+               # if stats.get_lives() > 0:
+                #    callback.on_next(TRY_AGAIN)
+                #else:
+                 #   callback.on_next(GAME_OVER)
+                  #  self._audio_service.play_sound(over_sound)
