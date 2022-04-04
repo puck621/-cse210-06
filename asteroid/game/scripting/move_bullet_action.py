@@ -8,6 +8,7 @@ class MoveBulletAction(Action):
         pass
 
     def execute(self, cast, script, callback):
+        """Gets the location and velocity of all bullet actors. Then adds the velocity to the location to create a new location. Reports new location"""
         bullets = cast.get_actors(BULLET_GROUP)
 
         for bullet in bullets:

@@ -5,6 +5,7 @@ from game.scripting.action import Action
 class DrawDialogAction(Action):
 
     def __init__(self, video_service):
+        """Defines sound and physical queues"""
         self._video_service = video_service
         
     def execute(self, cast, script, callback):

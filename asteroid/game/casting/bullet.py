@@ -47,12 +47,27 @@ class Bullet(Actor):
         return self._image
 
     def get_destroyed(self):
+        """Gets the Bullet's status if destroyed.
+
+        Returns:
+            An instance of if the bullet is destoryed.
+        """
         return self._destroyed
 
     def destroy(self):
+        """Changes the Bullet's status if destroyed.
+
+        Returns:
+            Changes the instance of if the bullet is destoryed.
+        """
         self._destroyed = True
 
     def release(self):
+        """Gets the Bullet's status if bullet is released.
+
+        Returns:
+            An instance of if the bullet is released.
+        """
         pass
 
     def release_up(self):

@@ -1,3 +1,5 @@
+"""Constants to use in constant.py if the user is on a MAC computer"""
+
 from game.casting.color import Color
 # --------------------------------------------------------------------------------------------------
 # GENERAL GAME CONSTANTS

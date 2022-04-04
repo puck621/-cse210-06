@@ -2,14 +2,18 @@ from constants import *
 from game.casting.sound import Sound
 from game.scripting.action import Action
 
+"""Control for bullets being deleted when they hit the boarder of the screen"""
+
 
 class CollideBordersAction(Action):
 
     def __init__(self, physics_service, audio_service):
+        """Defines sound and physical queues"""
         self._physics_service = physics_service
         self._audio_service = audio_service
 
     def execute(self, cast, script, callback):
+        """Checks location for  all bullets. Then destroys the bullets by removing the actor if the bullets is at the boarder of the screen"""
         bullets = cast.get_actors(BULLET_GROUP)
 
         for bullet in bullets:

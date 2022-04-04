@@ -1,9 +1,12 @@
 from constants import *
 from game.scripting.action import Action
 
+"""A callback that can be used to trigger scene changes."""
+
 
 class ChangeSceneAction(Action):
-
+    """A callback that can be used to trigger scene changes."""
+    
     def __init__(self, keyboard_service, next_scene):
         self._keyboard_service = keyboard_service
         self._next_scene = next_scene

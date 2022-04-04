@@ -9,6 +9,7 @@ class MoveShipAction(Action):
         pass
 
     def execute(self, cast, script, callback):
+        """Gets the location and velocity of the player's ship. Then adds the velocity to the location to create a new location. Reports new location"""
         ship = cast.get_first_actor(SHIP_GROUP)
         body = ship.get_body()
         velocity = body.get_velocity()

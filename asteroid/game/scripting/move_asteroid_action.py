@@ -9,6 +9,7 @@ class MoveAsteroidAction(Action):
         pass
 
     def execute(self, cast, script, callback):
+        """Gets the location and velocity of all asteroid actors. Then adds the velocity to the location to create a new location. Reports new location"""
         asteroids = cast.get_actors(ASTEROIDS_GROUP)
 
         for asteroid in asteroids:

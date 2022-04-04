@@ -5,9 +5,11 @@ from game.scripting.action import Action
 class ControlshipAction(Action):
 
     def __init__(self, keyboard_service):
+        """Defines keyboard inputss"""
         self._keyboard_service = keyboard_service
 
     def _create_bullet(self, ship, cast):
+        """Creates new actor Bullet with the trajectory and location of the ship"""
         ship_position = ship.get_body().get_position()
         x = ship_position.get_x()
         y = ship_position.get_y()
@@ -16,22 +18,27 @@ class ControlshipAction(Action):
         return bullet
 
     def _shoot_up(self, ship, cast):
+        """Creates a bullet at the location of the top of the ship with up velocity"""
         bullet = self._create_bullet(ship, cast)
         bullet.release_up()
 
     def _shoot_left(self, ship, cast):
+        """Creates a bullet at the location of the left of the ship with left velocity"""
         bullet = self._create_bullet(ship, cast)
         bullet.release_left()
 
     def _shoot_down(self, ship, cast):
+        """Creates a bullet at the location of the bottom of the ship with downward velocity"""
         bullet = self._create_bullet(ship, cast)
         bullet.release_down()
 
     def _shoot_right(self, ship, cast):
+        """Creates a bullet at the location of the right of the ship with right velocity"""
         bullet = self._create_bullet(ship, cast)
         bullet.release_right()
 
     def execute(self, cast, script, callback):
+        """Registers key strokes, moves the ship, creates correstoponding bullet, and creates text in terminal to track movements for debugging"""
         ship = cast.get_first_actor(SHIP_GROUP)
         if self._keyboard_service.is_key_down('a'):
             print("Control Ship Left")

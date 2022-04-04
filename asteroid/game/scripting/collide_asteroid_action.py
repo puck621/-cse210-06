@@ -2,14 +2,18 @@ from constants import *
 from game.casting.sound import Sound
 from game.scripting.action import Action
 
+"""A callback that controls collisions between bullets and astroid objects"""
+
 
 class CollideasteroidAction(Action):
 
     def __init__(self, physics_service, audio_service):
+        """Defines sound and physical queues"""
         self._physics_service = physics_service
         self._audio_service = audio_service
 
     def execute(self, cast, script, callback):
+        """Checks location for all astroids and all bullets. Then destroys the bullets and astroids by removing the actor if both object have the same location. Plays sound when asteroid is removed"""
         bullets = cast.get_actors(BULLET_GROUP)
         asteroids = cast.get_actors(ASTEROIDS_GROUP)
         stats = cast.get_first_actor(STATS_GROUP)
